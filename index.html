@@ -4,12 +4,13 @@
 <head>
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <link rel="stylesheet" href="css/styles.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Restaurant Reviews</title>
 </head>
 
 <body>
   <header>
-    <nav>
+    <nav role="navigation">
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
   </header>
@@ -19,8 +20,8 @@
       <div id="map"></div>
     </section>
     <section>
-      <div class="filter-options">
-        <h2>Filter Results</h2>
+      <div class="filter-options" role="filter options">
+        <h2 tabindex="0">Filter Results</h2>
         <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
           <option value="all">All Neighborhoods</option>
         </select>
@@ -34,13 +35,30 @@
 
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initMap"></script>
-
+  <!-- New -->
+  <script type="application/javascript" charset="utf-8" src="sw.js"></script>
+  <!-- New -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIujKIWKAbJe1jO8BD6-e0QIO9IPNY6p0&libraries=places&callback=initMap"></script>
 
   <footer id="footer">
     Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
 
+
+<!-- Code used to register service worker (code influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(function(registration) {
+          console.log('Service Worker registration successful with scope: ',
+          registration.scope);
+        })
+        .catch(function(err) {
+          console.log('Service Worker registration not working :() : ', err);
+        });
+    }
+  </script>
+<!-- Code used to register service worker -->
 </body>
 
 </html>

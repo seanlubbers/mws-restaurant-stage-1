@@ -51,9 +51,13 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
+  // New
+  name.tabIndex = restaurant.tabIndex;
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
+  // New
+  address.tabIndex = 0;
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'

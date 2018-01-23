@@ -48,6 +48,8 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   padding: 25px;
   text-align: center;
   text-transform: uppercase;
+  /* New */
+  box-sizing: content-box;
 }
 /* ====================== Navigation ====================== */
 nav {
@@ -110,7 +112,7 @@ nav h1 a {
 .filter-options {
   width: 100%;
   height: 8em;
-  background-color: #3397DB;
+  background-color: #007dbb;
   align-items: center;
 }
 .filter-options h2 {
@@ -147,12 +149,13 @@ nav h1 a {
   list-style: outside none none;
   margin-left: auto;
   margin-right: auto;
-  padding: 2em 2em 2em;
-  align-content: center;
-
-/* NEW */
-  display: flex;
-  width: 100%;
+  padding: 0;
+/*  align-content: center;
+*/
+  text-align: center;
+/* NEW --> only do display flex with media query when width is 600px or less (this centers all content when appropriate) */
+/*  display: flex;
+*/  width: 100%;
   flex-wrap: wrap;
 }
 #restaurants-list li {
@@ -162,7 +165,15 @@ nav h1 a {
   min-height: 380px;
   margin: 1em;
   padding: 25px 25px 25px;
-  float: right;
+  /*New*/
+  /*  float: right; */
+  display: inline-block;
+}
+
+@media screen and (max-width: 600px) {
+  #restaurants-list {
+    display: flex;
+  }
 }
 
 
@@ -176,6 +187,13 @@ nav h1 a {
   #restaurants-list li {
     width: 300px;
   }
+}
+
+@media screen and (min-width: 500px) {
+  #restaurants-list .restaurant-img {
+    width: 100%;
+    height: auto;
+    }
 }
 
 #restaurants-list .restaurant-img {
@@ -229,7 +247,6 @@ nav h1 a {
   width: 50%;
   margin: 2em;
 }
-
 
 .inside #map {
   background-color: #ccc;
@@ -315,6 +332,14 @@ nav h1 a {
 }
 
 
+@media screen and (max-width: 450px) {
+
+  #restaurants-list .restaurant-img {
+    width: 100%;
+    height: auto;
+    }
+}
+
 @media screen and (max-width: 650px) {
   
   .inside #map-container {
@@ -330,9 +355,11 @@ nav h1 a {
     width: 100%;
     position: relative;
     overflow: hidden;
-    padding: 0;
+    /*padding: 0;*/
     padding-left: 2em;
     padding-bottom: 2em;
+      /* New */
+    box-sizing: border-box;
   }
 
   #reviews-container {

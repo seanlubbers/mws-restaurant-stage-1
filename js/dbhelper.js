@@ -6,6 +6,7 @@ class DBHelper {
   /**
    * Database URL.
    * Change this to restaurants.json file location on your server.
+   * UPDATE --> change base of the server to get data from 1337
    */
   static get DATABASE_URL() {
     const port = 8000 // Change this to your server port
@@ -14,21 +15,37 @@ class DBHelper {
 
   /**
    * Fetch all restaurants.
+   * UPDATE --> Switched XHR request with Fetch
    */
   static fetchRestaurants(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json.restaurants;
-        callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
-        callback(error, null);
-      }
-    };
-    xhr.send();
+
+    // let xhr = new XMLHttpRequest();
+    // xhr.open('GET', DBHelper.DATABASE_URL);
+    // xhr.onload = () => {
+    //   if (xhr.status === 200) { // Got a success response from server!
+    //     // debugger;
+    //     const json = JSON.parse(xhr.responseText); // An array of 10 restuarants, basically has all the details of each
+
+    //     const restaurants = json.restaurants;
+    //     callback(null, restaurants);
+    //   } else { // Oops!. Got an error from server.
+    //     const error = (`Request failed. Returned status of ${xhr.status}`);
+    //     callback(error, null);
+    //   }
+    // };
+    // xhr.send();
+
+    fetch(DBHelper.DATABASE_URL).then(function(response) {
+        // debugger;
+        return response.json();
+    }).then(addTest);
+
+    function addTest(data) {
+      console.log(data);
+      // debugger;
+      const restaurants = data.restaurants;
+      callback(null, restaurants);
+    }
   }
 
   /**

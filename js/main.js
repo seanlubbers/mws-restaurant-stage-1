@@ -160,10 +160,10 @@ createRestaurantHTML = (restaurant) => {
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   // New
-  image.alt = restaurant.alt_text;
+  // * UPDATE --> Alt text no longer exists, changed to the restuarant naem attribute
+  image.alt = restaurant.name + " Image";
   // End
   li.append(image);
-
 
   const name = document.createElement('h2');
   // New

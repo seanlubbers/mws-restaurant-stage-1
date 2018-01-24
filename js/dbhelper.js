@@ -6,11 +6,14 @@ class DBHelper {
   /**
    * Database URL.
    * Change this to restaurants.json file location on your server.
-   * UPDATE --> change base of the server to get data from 1337
+   * UPDATE --> change baseof the server to get data from 1337
    */
   static get DATABASE_URL() {
-    const port = 8000 // Change this to your server port
-    return `http://localhost:${port}/data/restaurants.json`;
+    // const port = 8000 // Change this to your server port
+    // return `http://localhost:${port}/data/restaurants.json`;
+
+    const port = 1337 // Change this to your server port
+    return `http://localhost:${port}/restaurants`;
   }
 
   /**
@@ -41,9 +44,10 @@ class DBHelper {
     }).then(addTest);
 
     function addTest(data) {
-      console.log(data);
       // debugger;
-      const restaurants = data.restaurants;
+      // const restaurants = data.restaurants; 
+      // ^ For port 8000
+      const restaurants = data;
       callback(null, restaurants);
     }
   }
@@ -109,6 +113,10 @@ class DBHelper {
         callback(error, null);
       } else {
         let results = restaurants
+
+        // debugger;
+        // console.log("results are" + results);
+
         if (cuisine != 'all') { // filter by cuisine
           results = results.filter(r => r.cuisine_type == cuisine);
         }
@@ -165,9 +173,13 @@ class DBHelper {
 
   /**
    * Restaurant image URL.
-   */
+   * * UPDATE --> Server doesn't have photgraph data for Casa Enqrique, added manually.
+   */ 
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    if (restaurant.name == "Casa Enrique") {
+        return (`/img/10.jpg`); 
+    }
+    return (`/img/${restaurant.photograph}.jpg`);
   }
 
   /**

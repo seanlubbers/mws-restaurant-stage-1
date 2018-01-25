@@ -4,8 +4,6 @@ Service worker code
 Influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker)
 */
 
-console.log("able to get inside the file");
-
 (function() {
   'use strict';
 

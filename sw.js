@@ -4,6 +4,7 @@ Service worker code
 Influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker)
 */
 
+
 (function() {
   'use strict';
 
@@ -11,7 +12,6 @@ Influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-s
 // Stage 1 --> Adding things to Cache
   var filesToCache = [
   'css/styles.css',
-  'data/restaurants.json',
   'js/dbhelper.js',
   'js/main.js',
   'js/restaurant_info.js',
@@ -32,10 +32,10 @@ Influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-s
 var staticCacheName = 'pages-cache-v1';
 
 self.addEventListener('install', function(event) {
-  console.log('Attempting to install service worker and cache static assets');
   event.waitUntil(
     caches.open(staticCacheName)
     .then(function(cache) {
+      console.log('!!!!!!Opened cache');
       return cache.addAll(filesToCache);
     })
   );
@@ -57,7 +57,6 @@ self.addEventListener('install', function(event) {
         if (event.request.url.indexOf('test') < 0) {
           cache.put(event.request.url, response.clone());
         }
-        return response;
       });
     });
     }).catch(function(error) {

@@ -1,6 +1,10 @@
 /**
  * Common database helper functions.
  */
+
+var dbPromise;
+var dbExists;
+
 class DBHelper {
 
   /**
@@ -9,9 +13,6 @@ class DBHelper {
    * UPDATE --> change baseof the server to get data from 1337
    */
   static get DATABASE_URL() {
-    // const port = 8000 // Change this to your server port
-    // return `http://localhost:${port}/data/restaurants.json`;
-
     const port = 1337 // Change this to your server port
     return `http://localhost:${port}/restaurants`;
   }
@@ -19,36 +20,22 @@ class DBHelper {
   /**
    * Fetch all restaurants.
    * UPDATE --> Switched XHR request with Fetch
+   * UPDATE --> Able to store JSON responses in IndexedDB, not sure if it's the right place though
    */
   static fetchRestaurants(callback) {
 
-    // let xhr = new XMLHttpRequest();
-    // xhr.open('GET', DBHelper.DATABASE_URL);
-    // xhr.onload = () => {
-    //   if (xhr.status === 200) { // Got a success response from server!
-    //     // debugger;
-    //     const json = JSON.parse(xhr.responseText); // An array of 10 restuarants, basically has all the details of each
-
-    //     const restaurants = json.restaurants;
-    //     callback(null, restaurants);
-    //   } else { // Oops!. Got an error from server.
-    //     const error = (`Request failed. Returned status of ${xhr.status}`);
-    //     callback(error, null);
-    //   }
-    // };
-    // xhr.send();
-
     fetch(DBHelper.DATABASE_URL).then(function(response) {
-        // debugger;
-        return response.json();
+    var response = response.json();
+    response.then(function(val) {
+        dbPromise = DBHelper.openDb(val);
+    });
+    return response;
     }).then(addTest);
 
     function addTest(data) {
-      // debugger;
-      // const restaurants = data.restaurants; 
-      // ^ For port 8000
       const restaurants = data;
       callback(null, restaurants);
+      dbExists = true;
     }
   }
 
@@ -133,6 +120,7 @@ class DBHelper {
    */
   static fetchNeighborhoods(callback) {
     // Fetch all restaurants
+
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
@@ -195,5 +183,36 @@ class DBHelper {
     );
     return marker;
   }
+
+    static openDb(callback) { 
+
+        var dbRequest = idb.open('sean-db', 1, function(upgradeDB) {
+      
+            if (!upgradeDB.objectStoreNames.contains('keyval')) {
+                var keyValStore = upgradeDB.createObjectStore('keyval');
+                keyValStore.put(callback, 'ayo');
+            } 
+        });
+
+        dbRequest.onupgradeneeded = function (event) {
+
+            db = event.target.result;
+            var store = dbRequest.result.createObjectStore('restaurants', {
+                keyPath: 'id'
+            });
+            store.createIndex('neighborhoods', 'neighborhood');
+            store.createIndex('cuisines', 'cuisine_type');
+        };
+
+        dbRequest.onsuccess = function (event) {
+            db = event.target.result;
+            callback(true);
+        };
+
+        dbRequest.onerror = function (event) {
+            console.error("db error");
+            callback(false);
+        }
+    }  
 
 }

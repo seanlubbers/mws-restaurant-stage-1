@@ -4,10 +4,89 @@ let restaurants,
 var map
 var markers = []
 
+// debugger;
+// var dbPromise = idb.open('testy-db', 2, function(upgradeDB) {
+
+//     switch(upgradeDB.oldVersion) {
+//       case 0:
+//         var keyValStore = upgradeDB.createObjectStore('keyval');
+//         keyValStore.put('dom I have tor efresh erytime', 'suh');
+//       case 1:
+//         upgradeDB.createObjectStore('people', {keyPath: 'name'}); 
+//     }
+// }); 
+
+// dbPromise.then(function(db) {
+//   var tx = db.transaction('keyval');
+//   var keyValStore = tx.objectStore('keyval');
+//   return keyValStore.get('suh');
+// }).then(function(val) {
+//   console.log('the value of "suh" is:', val);
+// });
+
+// dbPromise.then(function(db) {
+//   var tx = db.transaction('keyval', 'readwrite');
+//   var keyValStore = tx.objectStore('keyval');
+//   keyValStore.put('bar', 'foo');
+//   return tx.complete;
+// }).then(function(val) {
+//   console.log('added foo bar bruh');
+// });
+
+
+
+// dbPromise.then(function(db) {
+//   var tx = db.transaction('people', 'readwrite');
+//   var peopleStore = tx.objectStore('people');
+
+//   peopleStore.put({
+//     name: 'Sean Lubbers',
+//     age: 25,
+//     favoriteAnimal: "Redtailed Hawk"
+//   });
+
+//   peopleStore.put({
+//     name: 'Rockenstein',
+//     age: 222,
+//     favoriteAnimal: "Raccooon"
+//   });  
+//   return tx.complete;
+// });
+
+
+// dbPromise.then(function(db) {
+//   var tx = db.transaction('people');
+//   var peopleStore = tx.objectStore('people');
+
+//   return peopleStore.getAll();
+// }).then(function(people) {
+//   console.log("People:", people);
+// });
+
+
+
+
+      // var tx = theDB.transaction('wittrs', 'readwrite');
+      // var store = tx.objectStore('wittrs');
+        
+      // response.forEach(function(message) {
+      //   store.put(message); 
+      // });
+
+      //   debugger;
+
+ // var newDB = idb.open('wittr', 1, function(upgradeDB) {
+ //        var store = upgradeDB.createObjectStore('wittrs', {
+ //          keyPath: 'id'
+ //        }); 
+ //      });
+
+
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+
   fetchNeighborhoods();
   fetchCuisines();
 });

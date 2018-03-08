@@ -31,8 +31,6 @@ Influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-s
   'node_modules/idb/lib/idb.js'
 ];
 
-debugger;
-
 var staticCacheName = 'pages-cache-v1';
 
 self.addEventListener('install', function(event) {

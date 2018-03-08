@@ -27,7 +27,11 @@ Influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-s
   'img/8.jpg',
   'img/9.jpg',
   'img/10.jpg',
+  'sw.js',
+  'node_modules/idb/lib/idb.js'
 ];
+
+debugger;
 
 var staticCacheName = 'pages-cache-v1';
 

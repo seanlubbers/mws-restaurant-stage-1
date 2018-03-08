@@ -5,6 +5,8 @@
 var dbPromise;
 var dbExists;
 
+var data;
+
 class DBHelper {
 
   /**
@@ -23,14 +25,20 @@ class DBHelper {
    * UPDATE --> Able to store JSON responses in IndexedDB, not sure if it's the right place though
    */
   static fetchRestaurants(callback) {
-
-    fetch(DBHelper.DATABASE_URL).then(function(response) {
-    var response = response.json();
-    response.then(function(val) {
-        dbPromise = DBHelper.openDb(val);
-    });
-    return response;
-    }).then(addTest);
+    if (DBHelper.data == undefined) {
+        fetch(DBHelper.DATABASE_URL).then(function(response) {
+        var response = response.json();
+        console.log("response is: ", response);
+        return response;
+      }).then(addTest).catch(function(data) {
+        console.log("data is: ", data);
+        callback(null, []);
+      });
+    } else {
+        const restaurants = DBHelper.data;
+        callback(null, restaurants);
+        dbExists = true;
+    }
 
     function addTest(data) {
       const restaurants = data;
@@ -38,6 +46,24 @@ class DBHelper {
       dbExists = true;
     }
   }
+
+
+static createAndUpdateDB(val) { 
+  'use strict';
+
+  //check for support 
+  if (!('indexedDB' in window)) { 
+    console.log('This browser doesn\'t support IndexedDB'); 
+  return; }
+
+  var dbPromise = idb.open('restaurant-reviews', 1, function(upgradeDb){ 
+    if (!upgradeDb.objectStoreNames.contains('restaurants')) { 
+      upgradeDb.createObjectStore('restaurants', {keyPath: 'id'}); 
+    } 
+  });
+  return dbPromise;
+}
+
 
   /**
    * Fetch a restaurant by its ID.
@@ -187,7 +213,6 @@ class DBHelper {
     static openDb(callback) { 
 
         var dbRequest = idb.open('sean-db', 1, function(upgradeDB) {
-      
             if (!upgradeDB.objectStoreNames.contains('keyval')) {
                 var keyValStore = upgradeDB.createObjectStore('keyval');
                 keyValStore.put(callback, 'ayo');

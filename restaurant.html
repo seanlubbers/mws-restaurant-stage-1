@@ -16,13 +16,13 @@
     <!-- Beginning nav -->
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
-    </nav>
     <!-- Beginning breadcrumb -->
       <ul id="breadcrumb" aria-label="breadcrumb">
         <li><a href="/">Home</a></li>
       </ul>
     <!-- End breadcrumb -->
     <!-- End nav -->
+    </nav>
   </header>
   <!-- End header -->
 
@@ -60,8 +60,26 @@
   </footer>
   <!-- End footer -->
   <!-- Beginning scripts -->
+<!-- Code used to register service worker (code influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(function(registration) {
+          console.log('Service Worker registration successful with scope: ',
+          registration.scope);
+        })
+        .catch(function(err) {
+          console.log('Service Worker registration not working :() : ', err);
+        });
+    }
+  </script>
+  <script type="text/javascript" src= "/node_modules/idb/lib/idb.js"></script>
+<!-- Code used to register service worker -->
+
+
   <!-- Database helpers -->
   <script type="text/javascript" src="js/dbhelper.js"></script>
+  <script type="text/javascript" src= "/node_modules/idb/lib/idb.js"></script>
   <!-- Main javascript file -->
   <script type="text/javascript" src="js/restaurant_info.js"></script>
   <!-- Google Maps -->

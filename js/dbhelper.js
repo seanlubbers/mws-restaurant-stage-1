@@ -200,6 +200,8 @@ static createAndUpdateDB(val) {
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {
+    // console.log("restaurant is: ", restaurant);
+    // console.log("map is: ", map);
     const marker = new google.maps.Marker({
       position: restaurant.latlng,
       title: restaurant.name,

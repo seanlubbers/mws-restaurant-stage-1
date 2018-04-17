@@ -8,7 +8,6 @@ var markers = []
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-  debugger;
   var dbPromise = DBHelper.createAndUpdateDB();
 
   dbPromise.then(function(db) {
@@ -229,7 +228,7 @@ createRestaurantHTML = (restaurant) => {
 addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
+    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.MAP);
     google.maps.event.addListener(marker, 'click', () => {
       window.location.href = marker.url
     });

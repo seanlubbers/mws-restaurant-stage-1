@@ -1,0 +1,14 @@
+{
+  "name": "Restaurant Reviews",
+  "short_name": "RR",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ccc",
+  "theme_color": "#ccc",
+  "description": "A sick restaurant reviews pwa.",
+  "icons": [{
+    "src": "img/10.jpg",
+    "sizes": "512x512",
+    "type": "image/jpg"
+  }]
+}

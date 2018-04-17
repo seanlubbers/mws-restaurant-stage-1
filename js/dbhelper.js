@@ -28,10 +28,8 @@ class DBHelper {
     if (DBHelper.data == undefined) {
         fetch(DBHelper.DATABASE_URL).then(function(response) {
         var response = response.json();
-        console.log("response is: ", response);
         return response;
       }).then(addTest).catch(function(data) {
-        console.log("data is: ", data);
         callback(null, []);
       });
     } else {
@@ -127,9 +125,6 @@ static createAndUpdateDB(val) {
       } else {
         let results = restaurants
 
-        // debugger;
-        // console.log("results are" + results);
-
         if (cuisine != 'all') { // filter by cuisine
           results = results.filter(r => r.cuisine_type == cuisine);
         }
@@ -200,9 +195,7 @@ static createAndUpdateDB(val) {
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {
-    // console.log("restaurant is: ", restaurant);
-    // console.log("map is: ", map);
-    const marker = new google.maps.Marker({
+      const marker = new google.maps.Marker({
       position: restaurant.latlng,
       title: restaurant.name,
       url: DBHelper.urlForRestaurant(restaurant),

@@ -17,10 +17,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
       return newnew;
   }).then(function(val) {
     if (val.length == 0) {
-        console.log("about to fetch the response >:(");
         fetch(DBHelper.DATABASE_URL).then(function(response) {
         var response = response.json();
-        console.log("response is: ", response);
         return response;
         }).then(function(rep) {
             dbPromise.then(function(db) { 
@@ -39,7 +37,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
       return val;
     }
   }).then(function(val) {
-    console.log("running through this");
     fetchNeighborhoods();
     fetchCuisines();
   });

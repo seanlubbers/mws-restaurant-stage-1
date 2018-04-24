@@ -179,7 +179,6 @@ createReviewFormTitle = () => {
 
 
 myScript = (form) => {
-  debugger;
   const what_it_do1 = document.getElementById("unique_form").name.value;
   const what_it_do2 = document.getElementById("unique_form").restaurant_id.value;
   const what_it_do3 = document.getElementById("unique_form").rating.value;
@@ -190,7 +189,6 @@ myScript = (form) => {
   console.log(what_it_do3);
   console.log(what_it_do4);
 
-  debugger;
   // Finna use a Post request
 
   fetch('http://localhost:1337/reviews/', {

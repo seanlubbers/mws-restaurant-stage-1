@@ -102,23 +102,46 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  * Create all reviews HTML and add them to the webpage.
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
-  const container = document.getElementById('reviews-container');
-  const title = document.createElement('h2');
-  title.innerHTML = 'Reviews';
-  container.appendChild(title);
+  // debugger;
+  // Get current URL (with ID)
+  const page_url = window.location.href;
+  // Use included function to get restaurant's ID
+  const no_flockin = getParameterByName('id', page_url);
+  // Create DB address that points to restaurant's reviews
+  const final_addy = 'http://localhost:1337/reviews/?restaurant_id=' + no_flockin;
+  // Create the reviews and add them to the page
+  fetch(final_addy).then(function(response) {
+      var response = response.json();
+      return response;
+  }).then(function(rep) {
+      // debugger;
+      const container = document.getElementById('reviews-container');
+      const title = document.createElement('h2');
+      title.innerHTML = 'Reviews';
+      container.appendChild(title);
 
-  if (!reviews) {
-    const noReviews = document.createElement('p');
-    noReviews.innerHTML = 'No reviews yet!';
-    container.appendChild(noReviews);
-    return;
-  }
-  const ul = document.getElementById('reviews-list');
-  reviews.forEach(review => {
-    ul.appendChild(createReviewHTML(review));
+      // Create the reviews form
+      // container.appendChild(createReviewFormTitle());
+      // container.appendChild(createReviewForm());
+
+      if (!rep) {
+        const noReviews = document.createElement('p');
+        noReviews.innerHTML = 'No reviews yet!';
+        container.appendChild(noReviews);
+        return;
+      }
+      const ul = document.getElementById('reviews-list');
+      rep.forEach(review => {
+        ul.appendChild(createReviewHTML(review));
+      });
+      container.appendChild(ul);
+
+      // // Create the reviews form
+      container.appendChild(createReviewFormTitle());
+      const formula = createReviewForm();
+      container.appendChild(formula);
   });
-  container.appendChild(ul);
-}
+  }
 
 /**
  * Create review HTML and add it to the webpage.
@@ -130,7 +153,7 @@ createReviewHTML = (review) => {
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = review.createdAt;
   li.appendChild(date);
 
   const rating = document.createElement('p');
@@ -143,6 +166,106 @@ createReviewHTML = (review) => {
 
   return li;
 }
+
+
+/**
+ * Creates a form title and adds it to the page
+ */
+createReviewFormTitle = () => {
+  const title2 = document.createElement('h2');
+  title2.innerHTML = 'Leave a Review';
+  return title2;
+}
+
+
+myScript = (form) => {
+  debugger;
+  const what_it_do1 = document.getElementById("unique_form").name.value;
+  const what_it_do2 = document.getElementById("unique_form").restaurant_id.value;
+  const what_it_do3 = document.getElementById("unique_form").rating.value;
+  const what_it_do4 = document.getElementById("unique_form").comments.value;
+
+  console.log(what_it_do1);
+  console.log(what_it_do2);
+  console.log(what_it_do3);
+  console.log(what_it_do4);
+
+  debugger;
+  // Finna use a Post request
+
+  fetch('http://localhost:1337/reviews/', {
+  method: 'post',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({"restaurant_id": what_it_do2, "name": what_it_do1, "rating": what_it_do3, "comments": what_it_do4})
+  }).then(res=>res.json())
+  .then(res => console.log(res));
+}
+
+/**
+ * Creates a review form adds it to the page
+ */
+createReviewForm = () => {
+  const form1 = document.createElement('form');
+  form1.id = "unique_form";
+  form1.addEventListener("submit", myScript);
+
+  const input5 = document.createElement('input');
+  input5.type = "text";
+  input5.name = "restaurant_id";
+
+  const label5 = document.createElement('label');
+  label5.innerHTML = "Restaurant ID: "
+  form1.appendChild(label5);
+  form1.appendChild(input5);
+  const br5 = document.createElement('br');
+  form1.appendChild(br5);
+
+  const input1 = document.createElement('input');
+  input1.type = "text";
+  input1.name = "name"
+
+  const label1 = document.createElement('label');
+  label1.innerHTML = "Name: "
+  form1.appendChild(label1);
+  form1.appendChild(input1);
+  const br = document.createElement('br');
+  form1.appendChild(br);
+
+  const input2 = document.createElement('input');
+  input2.type = "text";
+  input2.name = "rating";
+
+  const label2 = document.createElement('label');
+  label2.innerHTML = "Rating: "
+  form1.appendChild(label2);
+  form1.appendChild(input2);
+  const br2 = document.createElement('br');
+  form1.appendChild(br2);
+
+
+  const input3 = document.createElement('textarea');
+  input3.name = "comments";
+
+  const label3 = document.createElement('label');
+  input3.rows = "6";
+  label3.innerHTML = "Comments: "
+  form1.appendChild(label3);
+  const br3 = document.createElement('br');
+  form1.appendChild(br3);
+  form1.appendChild(input3);
+
+  const br4 = document.createElement('br');
+  form1.appendChild(br4);
+  const input4 = document.createElement('input');
+  input4.type = "submit";
+  form1.appendChild(input4);
+
+  return form1;
+}
+
 
 /**
  * Add restaurant name to the breadcrumb navigation menu

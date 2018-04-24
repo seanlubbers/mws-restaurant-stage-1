@@ -191,7 +191,7 @@ myScript = (form) => {
   console.log(what_it_do4);
 
   debugger;
-  // Finna use a Post request
+  // Code influenced from Stackoverflow Post: https://stackoverflow.com/questions/29775797/fetch-post-json-data
 
   fetch('http://localhost:1337/reviews/', {
   method: 'post',

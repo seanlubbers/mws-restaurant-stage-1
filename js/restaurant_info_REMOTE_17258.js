@@ -255,21 +255,7 @@ myScript = (form) => {
   const what_it_do2 = document.getElementById("unique_form").restaurant_id.value;
   const what_it_do3 = document.getElementById("unique_form").rating.value;
   const what_it_do4 = document.getElementById("unique_form").comments.value;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-  console.log(what_it_do1);
-  console.log(what_it_do2);
-  console.log(what_it_do3);
-  console.log(what_it_do4);
-
-  debugger;
-  // Code influenced from Stackoverflow Post: https://stackoverflow.com/questions/29775797/fetch-post-json-data
-=======
-=======
->>>>>>> projXXX
   // Finna use a Post request
->>>>>>> projXXX
 
   fetch('http://localhost:1337/reviews/', {
   method: 'post',

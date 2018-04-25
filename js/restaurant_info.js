@@ -73,8 +73,86 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
+
+  // Filling the checkbox
+  fillFavorite();
+
   // fill reviews
   fillReviewsHTML();
+
+}
+
+
+// Takes care of filling the checkbox state
+fillFavorite = () => {
+  const label = document.getElementById('swatch');
+  const check = document.createElement('input');
+  check.setAttribute("type", "checkbox");
+  check.setAttribute("id", "checkerati");
+  label.appendChild(check);
+
+  const page_url = window.location.href;
+  // Use included function to get restaurant's ID
+  const no_flockin = getParameterByName('id', page_url);
+  // Create DB address that points to restaurant's reviews
+  const new_url = 'http://localhost:1337/restaurants/' + no_flockin + '/?is_favorite'
+
+  fetch(new_url).then(function(response) {
+    var response = response.json();
+    return response;
+  }).then(function(rep) {
+      const new_shit = rep.is_favorite;
+      if (new_shit == "true") {
+        check.setAttribute("checked", true);
+        const onoroff = document.getElementById('swatch');
+        onoroff.setAttribute("class", "favon");
+      } else {
+        const onoroff = document.getElementById('swatch');
+        onoroff.setAttribute("class", "favoff");
+      }
+    });
+
+  check.addEventListener("change", myScript2);
+}
+
+
+myScript2 = () => {
+  const element = document.getElementById('checkerati');
+  if (element.value == "on") {
+    // Get current URL (with ID)
+    const page_url = window.location.href;
+    // Use included function to get restaurant's ID
+    const no_flockin = getParameterByName('id', page_url);
+    // Create DB address that points to restaurant's reviews
+    const new_url = 'http://localhost:1337/restaurants/' + no_flockin + '/?is_favorite'
+
+    fetch(new_url).then(function(response) {
+      var response = response.json();
+      return response;
+    }).then(function(rep) {
+        const new_shit = rep.is_favorite
+        return new_shit;
+    }).then(function(tf) {
+        var newest_url;
+        if (tf == "true") {
+          newest_url = new_url + "=" + false;
+        } else {
+          newest_url = new_url + "=" + true;
+        }
+        return newest_url;
+    }).then(function(newest_url) {
+          fetch(newest_url, {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({"is_favorite": false})
+          }).then(function(res) {
+            console.log('res is: ', res);
+          });
+    });
+}
 }
 
 /**
@@ -102,7 +180,6 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  * Create all reviews HTML and add them to the webpage.
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
-  // debugger;
   // Get current URL (with ID)
   const page_url = window.location.href;
   // Use included function to get restaurant's ID
@@ -114,15 +191,10 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
       var response = response.json();
       return response;
   }).then(function(rep) {
-      // debugger;
       const container = document.getElementById('reviews-container');
       const title = document.createElement('h2');
       title.innerHTML = 'Reviews';
       container.appendChild(title);
-
-      // Create the reviews form
-      // container.appendChild(createReviewFormTitle());
-      // container.appendChild(createReviewForm());
 
       if (!rep) {
         const noReviews = document.createElement('p');
@@ -179,11 +251,11 @@ createReviewFormTitle = () => {
 
 
 myScript = (form) => {
-  debugger;
   const what_it_do1 = document.getElementById("unique_form").name.value;
   const what_it_do2 = document.getElementById("unique_form").restaurant_id.value;
   const what_it_do3 = document.getElementById("unique_form").rating.value;
   const what_it_do4 = document.getElementById("unique_form").comments.value;
+<<<<<<< HEAD
 
   console.log(what_it_do1);
   console.log(what_it_do2);
@@ -192,6 +264,9 @@ myScript = (form) => {
 
   debugger;
   // Code influenced from Stackoverflow Post: https://stackoverflow.com/questions/29775797/fetch-post-json-data
+=======
+  // Finna use a Post request
+>>>>>>> projXXX
 
   fetch('http://localhost:1337/reviews/', {
   method: 'post',

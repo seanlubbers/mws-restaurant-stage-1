@@ -33,7 +33,6 @@
     <section id="map-container" role="application" aria-label="google map">
       <div id="map"></div>
     </section>
-
     <!-- End map -->
     <!-- Beginning restaurant -->
     <!-- Aria role for SECTION found from https://developer.paciellogroup.com/blog/2011/03/html5-accessibility-chops-section-elements/ -->
@@ -44,6 +43,13 @@
       <p id="restaurant-address"></p>
       <table id="restaurant-hours"></table>
     </section>
+        <!-- Favorite Restaurant Section -->
+    </section>
+      <label class="switch" id="swatch">Favorite Restaurant (Green Yes, Red No)
+          <span class="slider"></span>
+      </label>
+    <section>
+
     <!-- end restaurant -->
     <!-- Beginning reviews -->
     <section id="reviews-container" role="region" aria-label="reviews">
@@ -61,17 +67,17 @@
   </footer>
   <!-- End footer -->
   <!-- Beginning scripts -->
-<!-- Code used to register service worker (code influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker) -->
+<!-- Code used to register service worker (code influenced by https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker and https://developers.google.com/web/updates/2015/12/background-sync) -->
+
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(function(registration) {
-          console.log('Service Worker registration successful with scope: ',
-          registration.scope);
-        })
-        .catch(function(err) {
-          console.log('Service Worker registration not working :() : ', err);
-        });
+      // Register your service worker:
+      navigator.serviceWorker.register('/sw.js');
+
+      // Then later, request a one-off sync:
+      navigator.serviceWorker.ready.then(function(swRegistration) {
+        return swRegistration.sync.register('myFirstSync');
+      });
     }
   </script>
   <script type="text/javascript" src= "/node_modules/idb/lib/idb.js"></script>

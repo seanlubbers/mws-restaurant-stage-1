@@ -117,6 +117,7 @@ fillFavorite = () => {
 
 
 myScript2 = () => {
+  debugger;
   const element = document.getElementById('checkerati');
   if (element.value == "on") {
     // Get current URL (with ID)
@@ -133,11 +134,21 @@ myScript2 = () => {
         const new_shit = rep.is_favorite
         return new_shit;
     }).then(function(tf) {
+        debugger;
         var newest_url;
         if (tf == "true") {
           newest_url = new_url + "=" + false;
+          const check = document.getElementById('checkerati');
+          check.setAttribute("checked", false);
+          const onoroff = document.getElementById('swatch');
+          onoroff.setAttribute("class", "favoff");
         } else {
           newest_url = new_url + "=" + true;
+          // Setting the check 
+          const check = document.getElementById('checkerati');
+          check.setAttribute("checked", true);
+          const onoroff = document.getElementById('swatch');
+          onoroff.setAttribute("class", "favon");
         }
         return newest_url;
     }).then(function(newest_url) {
@@ -256,6 +267,7 @@ myScript = (form) => {
   const what_it_do3 = document.getElementById("unique_form").rating.value;
   const what_it_do4 = document.getElementById("unique_form").comments.value;
 
+  
   fetch('http://localhost:1337/reviews/', {
   method: 'post',
   headers: {
@@ -278,47 +290,52 @@ createReviewForm = () => {
   const input5 = document.createElement('input');
   input5.type = "text";
   input5.name = "restaurant_id";
+  // input5.setAttribute("label", "enterid");
 
   const label5 = document.createElement('label');
   label5.innerHTML = "Restaurant ID: "
   form1.appendChild(label5);
-  form1.appendChild(input5);
+  label5.appendChild(input5);
   const br5 = document.createElement('br');
   form1.appendChild(br5);
 
   const input1 = document.createElement('input');
   input1.type = "text";
   input1.name = "name"
+  // input1.setAttribute("label", "entername");
 
   const label1 = document.createElement('label');
   label1.innerHTML = "Name: "
   form1.appendChild(label1);
-  form1.appendChild(input1);
+  label1.appendChild(input1);
   const br = document.createElement('br');
   form1.appendChild(br);
 
   const input2 = document.createElement('input');
   input2.type = "text";
   input2.name = "rating";
+  // input2.setAttribute("label", "enterrating");
 
   const label2 = document.createElement('label');
   label2.innerHTML = "Rating: "
   form1.appendChild(label2);
-  form1.appendChild(input2);
+  label2.appendChild(input2);
   const br2 = document.createElement('br');
   form1.appendChild(br2);
 
 
   const input3 = document.createElement('textarea');
   input3.name = "comments";
+  // input3.setAttribute("label", "entercomments");
+
 
   const label3 = document.createElement('label');
   input3.rows = "6";
   label3.innerHTML = "Comments: "
   form1.appendChild(label3);
   const br3 = document.createElement('br');
-  form1.appendChild(br3);
-  form1.appendChild(input3);
+  label3.appendChild(br3);
+  label3.appendChild(input3);
 
   const br4 = document.createElement('br');
   form1.appendChild(br4);

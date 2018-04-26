@@ -7,8 +7,8 @@
   "theme_color": "#ccc",
   "description": "A sick restaurant reviews pwa.",
   "icons": [{
-    "src": "img/10.jpg",
+    "src": "restaurant.png",
     "sizes": "512x512",
-    "type": "image/jpg"
+    "type": "image/png"
   }]
 }
